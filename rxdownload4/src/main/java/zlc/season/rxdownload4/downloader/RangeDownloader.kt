@@ -1,5 +1,6 @@
 package zlc.season.rxdownload4.downloader
 
+import android.util.Log
 import io.reactivex.Emitter
 import io.reactivex.Flowable
 import io.reactivex.functions.BiConsumer
@@ -37,7 +38,8 @@ class RangeDownloader : Downloader {
         return if (alreadyDownloaded) {
             Flowable.just(Progress(
                     downloadSize = response.contentLength(),
-                    totalSize = response.contentLength()
+                    totalSize = response.contentLength(),
+                    downloadUrl = taskInfo.task.url
             ))
         } else {
             startDownload(taskInfo, response)
@@ -88,7 +90,8 @@ class RangeDownloader : Downloader {
 
         val progress = Progress(
                 downloadSize = downloadSize,
-                totalSize = totalSize
+                totalSize = totalSize,
+                downloadUrl = taskInfo.task.url
         )
 
         val sources = mutableListOf<Flowable<Long>>()
@@ -150,7 +153,7 @@ class RangeDownloader : Downloader {
                         internalState.apply {
                             val buffer = ByteArray(8192)
                             val readLen = source.read(buffer)
-
+                            // Log.d("emitter", emitter.toString() )
                             if (readLen == -1) {
                                 emitter.onComplete()
                             } else {

@@ -33,7 +33,7 @@ object SimpleStorage : MemoryStorage() {
 
     private fun localSave(task: Task) {
         val key = task.hashCode().toString()
-        val value = task.taskName + "\n" + task.saveName + "\n" + task.savePath
+        val value = task.taskName + "\n" + task.saveName + "\n" + task.savePath + "\n" + task.url
 
         val editor = sp.edit()
         editor.putString(key, value)

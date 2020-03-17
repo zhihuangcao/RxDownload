@@ -10,7 +10,8 @@ class Progress(
         /**
          * 用于标识一个链接是否是分块下载, 如果该值为true, 那么totalSize为-1
          */
-        var isChunked: Boolean = false
+        var isChunked: Boolean = false,
+        var downloadUrl: String = ""
 ) {
 
     var totalSize: Long = totalSize
